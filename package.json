@@ -1,0 +1,17 @@
+{
+  "name": "com.meangpu.tooltip",
+  "version": "0.0.1",
+  "unity": "2021.3",
+  "displayName": "MeTooltip",
+  "description": "For tooltip package",
+  "type": "template",
+  "author": {
+    "name": "meangpu",
+    "url": "https://github.com/meangpu"
+  },
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.6",
+    "com.oss.leantween": "https://github.com/JohannesDeml/LeanTween.git",
+    "com.unity.inputsystem": "1.5.1"
+  }
+}
