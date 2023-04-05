@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
 public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -9,6 +10,16 @@ public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] string header;
     [Multiline()]
     [SerializeField] string content;
+
+    [Header("Ray check")]
+    [SerializeField] bool _checkRayDistance;
+    [SerializeField] float _maxRayDistance = 2f;
+    Camera cam;
+
+    void Start()
+    {
+        cam = Camera.main;
+    }
 
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -21,8 +32,23 @@ public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         HideTooltip();
     }
 
+    bool IsRayDoHitObject()
+    {
+        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+        return Physics.Raycast(ray, out hit, _maxRayDistance);
+    }
+
     void OnMouseEnter()
     {
+        if (!_checkRayDistance)
+        {
+            ShowTooltip();
+            return;
+        }
+
+        if (!IsRayDoHitObject()) return;
+
         ShowTooltip();
     }
 
