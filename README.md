@@ -8,3 +8,9 @@ to edit this package need to
 - nest this inside `Assets/MeangpuTools`
 
 fix editor by use `allow unsafe code`
+
+install via
+
+```
+https://github.com/meangpu/U.MeTooltip.git
+```
