@@ -11,6 +11,6 @@ fix editor by use `allow unsafe code`
 
 install via
 
-```
+```text
 https://github.com/meangpu/U.MeTooltip.git
 ```
