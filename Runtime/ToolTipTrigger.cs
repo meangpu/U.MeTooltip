@@ -16,21 +16,9 @@ public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] float _maxRayDistance = 2f;
     Camera cam;
 
-    void Start()
-    {
-        cam = Camera.main;
-    }
-
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        ShowTooltip();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        HideTooltip();
-    }
+    void Start() => cam = Camera.main;
+    public void OnPointerEnter(PointerEventData eventData) => ShowTooltip();
+    public void OnPointerExit(PointerEventData eventData) => HideTooltip();
 
     bool IsRayDoHitObject()
     {
@@ -52,10 +40,7 @@ public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         ShowTooltip();
     }
 
-    void OnMouseExit()
-    {
-        HideTooltip();
-    }
+    void OnMouseExit() => HideTooltip();
 
     private void HideTooltip()
     {
@@ -69,8 +54,5 @@ public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         else ShowContent();
     }
 
-    void ShowContent()
-    {
-        ToolTipSystem.Show(content, header);
-    }
+    void ShowContent() => ToolTipSystem.Show(content, header);
 }

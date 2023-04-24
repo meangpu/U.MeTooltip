@@ -20,15 +20,9 @@ public class Tooltip : MonoBehaviour
     public Vector2 offScreenBound;
     public bool IsUsedNewInputSystem;
 
-    private void Awake()
-    {
-        rectTrans = GetComponent<RectTransform>();
-    }
+    private void Awake() => rectTrans = GetComponent<RectTransform>();
 
-    private void Update()
-    {
-        UpdatePosition();
-    }
+    private void Update() => UpdatePosition();
 
     void SetupOffScreenBound()
     {
