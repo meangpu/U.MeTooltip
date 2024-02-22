@@ -50,7 +50,7 @@ namespace Meangpu.Tooltip
 
         void SetupOffScreenBound()
         {
-            offScreenBound = new Vector2(_tooltipRectTrans.rect.width, _tooltipRectTrans.rect.height); // use to set bound to box size
+            offScreenBound = new Vector2(_tooltipRectTrans.rect.width + _offSet.x, _tooltipRectTrans.rect.height + _offSet.y); // use to set bound to box size
         }
 
         public bool IsBetweenFloat(float testValue, float bound1, float bound2) => testValue >= Mathf.Min(bound1, bound2) && testValue <= Mathf.Max(bound1, bound2);
