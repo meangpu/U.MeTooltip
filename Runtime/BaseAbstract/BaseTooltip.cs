@@ -1,6 +1,8 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace Meangpu.Tooltip
 {
@@ -13,7 +15,6 @@ namespace Meangpu.Tooltip
 
         [Header("Setting")]
         [SerializeField] protected Vector2 _offSet = new(30, 20);
-        [SerializeField] bool IsUsedNewInputSystem;
         protected Vector2 _mousePos;
         protected Vector2 offScreenBound;
 
@@ -57,7 +58,12 @@ namespace Meangpu.Tooltip
         public void UpdatePosition()
         {
             SetupOffScreenBound();
-            _mousePos = IsUsedNewInputSystem ? Mouse.current.position.ReadValue() : Input.mousePosition;
+
+#if ENABLE_LEGACY_INPUT_MANAGER
+            _mousePos = Input.mousePosition;
+#elif ENABLE_INPUT_SYSTEM
+            _mousePos = Mouse.current.position.ReadValue();
+#endif
             DoSetPosSmart(_mousePos);
         }
 
