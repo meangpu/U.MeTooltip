@@ -3,21 +3,18 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
-
-[ExecuteInEditMode()]
 public class Tooltip : MonoBehaviour
 {
-    // original code learn from: https://www.youtube.com/watch?v=HXFoUGw7eKk
     public TMP_Text headerField;
     public TMP_Text contentField;
 
     public LayoutElement layoutElementObj;
     public RectTransform rectTrans;
 
-    public Vector2 offSet = new Vector2(30, 20);
+    public Vector2 offSet = new(30, 20);
     Vector2 _mousePos;
 
-    public Vector2 offScreenBound;
+    private Vector2 offScreenBound;
     public bool IsUsedNewInputSystem;
 
     private void Awake() => rectTrans = GetComponent<RectTransform>();
@@ -76,14 +73,12 @@ public class Tooltip : MonoBehaviour
 
     void SetBoxLayoutElement()
     {
-        int headerLength = headerField.text.Length;
-        int contentLength = contentField.text.Length;
         layoutElementObj.enabled = Mathf.Max(headerField.preferredWidth, contentField.preferredWidth) >= layoutElementObj.preferredWidth;
     }
 
     public bool IsBetweenFloat(float testValue, float bound1, float bound2)
     {
-        return (testValue >= Mathf.Min(bound1, bound2) && testValue <= Mathf.Max(bound1, bound2));
+        return testValue >= Mathf.Min(bound1, bound2) && testValue <= Mathf.Max(bound1, bound2);
     }
 
 }

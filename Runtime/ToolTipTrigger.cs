@@ -8,7 +8,7 @@ public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] bool useTimeDelay = true;
 
     [SerializeField] string header;
-    [Multiline()]
+    [TextArea]
     [SerializeField] string content;
 
     [Header("Ray check")]
@@ -17,6 +17,7 @@ public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     Camera cam;
 
     void Start() => cam = Camera.main;
+
     public void OnPointerEnter(PointerEventData eventData) => ShowTooltip();
     public void OnPointerExit(PointerEventData eventData) => HideTooltip();
 
