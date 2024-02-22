@@ -72,8 +72,19 @@ namespace Meangpu.Tooltip
 
         private void ShowTooltip()
         {
-            if (_useTimeDelay) Invoke(nameof(ShowContent), _timeBeforePopUp);
-            else ShowContent();
+            if (_useTimeDelay)
+            {
+                Invoke(nameof(SetupContentThenInvokeAction), _timeBeforePopUp);
+            }
+            else
+            {
+                SetupContentThenInvokeAction();
+            }
+        }
+
+        public void SetupContentThenInvokeAction()
+        {
+            ShowContent();
             ActionTooltip.OnShowTooltip?.Invoke();
         }
 

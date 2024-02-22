@@ -15,7 +15,7 @@ namespace Meangpu.Tooltip.Basic
         }
         protected override void OnDisable()
         {
-            base.OnEnable();
+            base.OnDisable();
             ActionTooltip.OnDisplayBasicText -= DisplayContent;
         }
 

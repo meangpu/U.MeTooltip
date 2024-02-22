@@ -7,6 +7,7 @@ namespace Meangpu.Tooltip.Basic
         [SerializeField] string header;
         [TextArea][SerializeField] string content;
 
+        // content will get show before tooltip Action OnShowTooltip got call
         public override void ShowContent() => ActionTooltip.OnDisplayBasicText?.Invoke(content, header);
     }
 }
