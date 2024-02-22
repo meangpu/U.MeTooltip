@@ -29,6 +29,7 @@ namespace Meangpu.Tooltip
         public void OnPointerEnter(PointerEventData eventData) => ShowTooltip();
         public void OnPointerExit(PointerEventData eventData) => HideTooltip();
 
+
         bool IsRayDoHitObject()
         {
             Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -59,7 +60,10 @@ namespace Meangpu.Tooltip
         {
             if (_preventUIOverMouse)
             {
-                if (EventSystem.current.IsPointerOverGameObject()) return;
+                if (EventSystem.current != null)
+                {
+                    if (EventSystem.current.IsPointerOverGameObject()) return;
+                }
             }
 
             CancelInvoke();
