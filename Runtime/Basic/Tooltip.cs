@@ -1,43 +1,41 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 namespace Meangpu.Tooltip.Basic
 {
     public class Tooltip : BaseTooltip
     {
-        public TMP_Text headerField;
-        public TMP_Text contentField;
-        [SerializeField] LayoutElement layoutElementObj;
+        public TMP_Text _headerField;
+        public TMP_Text _contentField;
 
-        public override void HideTooltip()
+        protected override void OnEnable()
         {
-            throw new System.NotImplementedException();
+            base.OnEnable();
+            ActionTooltip.OnDisplayBasicText += DisplayContent;
         }
-
-        public override void ShowTooltip()
+        protected override void OnDisable()
         {
-            throw new System.NotImplementedException();
+            base.OnEnable();
+            ActionTooltip.OnDisplayBasicText -= DisplayContent;
         }
 
         public override bool LayoutElementShouldBeEnable()
         {
-            return Mathf.Max(headerField.preferredWidth, contentField.preferredWidth) >= layoutElementObj.preferredWidth;
+            return Mathf.Max(_headerField.preferredWidth, _contentField.preferredWidth) >= _tooltipLayoutElementObj.preferredWidth;
         }
 
-        public void SetText(string content, string header = "")
+        public void DisplayContent(string content, string header = "")
         {
-            if (string.IsNullOrEmpty(header)) headerField.gameObject.SetActive(false);
+            if (string.IsNullOrEmpty(header)) _headerField.gameObject.SetActive(false);
             else
             {
-                headerField.SetText(header);
-                headerField.gameObject.SetActive(true);
+                _headerField.SetText(header);
+                _headerField.gameObject.SetActive(true);
             }
-            contentField.SetText(content);
+            _contentField.SetText(content);
             UpdateBoxLayoutElement();
             UpdatePosition();
             gameObject.SetActive(true);
         }
-
     }
 }

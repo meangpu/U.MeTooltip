@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 4367617979329850320}
   - component: {fileID: 4367617979329850323}
   - component: {fileID: 4367617979329850322}
+  - component: {fileID: 2325106859196361636}
   m_Layer: 5
   m_Name: ToolTipCanvas
   m_TagString: Untagged
@@ -224,6 +225,25 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &2325106859196361636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4367617979329850324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd96b769ccbaa8649a7a225fe7f3f304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toolTipRectTrans: {fileID: 4367617978425915810}
+  _tooltipLayoutElementObj: {fileID: 4367617978425915823}
+  _tooltipParentObject: {fileID: 4367617978425915813}
+  _offSet: {x: 30, y: 20}
+  IsUsedNewInputSystem: 1
+  _headerField: {fileID: 4367617979792444798}
+  _contentField: {fileID: 4367617979804944170}
 --- !u!1 &4367617979792444784
 GameObject:
   m_ObjectHideFlags: 0

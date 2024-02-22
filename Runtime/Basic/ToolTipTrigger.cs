@@ -6,10 +6,6 @@ namespace Meangpu.Tooltip.Basic
     {
         [SerializeField] string header;
         [TextArea][SerializeField] string content;
-
-        public override void ShowContent()
-        {
-
-        }
+        public override void ShowContent() => ActionTooltip.OnDisplayBasicText?.Invoke(content, header);
     }
 }
