@@ -20,6 +20,8 @@ namespace Meangpu.Tooltip
         [SerializeField] float _maxRayDistance = 999f;
         [EndIf]
 
+        [SerializeField] bool _preventUIOverMouse = true;
+
         Camera cam;
 
         void Awake() => cam = Camera.main;
@@ -35,6 +37,11 @@ namespace Meangpu.Tooltip
 
         void OnMouseEnter()
         {
+            if (_preventUIOverMouse)
+            {
+                if (EventSystem.current.IsPointerOverGameObject()) return;
+            }
+
             if (!_checkRayDistance)
             {
                 ShowTooltip();
@@ -50,6 +57,11 @@ namespace Meangpu.Tooltip
 
         private void HideTooltip()
         {
+            if (_preventUIOverMouse)
+            {
+                if (EventSystem.current.IsPointerOverGameObject()) return;
+            }
+
             CancelInvoke();
             ActionTooltip.OnHideTooltip?.Invoke();
         }
