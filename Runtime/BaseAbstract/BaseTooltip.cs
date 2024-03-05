@@ -34,14 +34,14 @@ namespace Meangpu.Tooltip
 
         protected virtual void OnEnable()
         {
-            ActionTooltip.OnShowTooltip += ShowTooltip;
-            ActionTooltip.OnHideTooltip += HideTooltip;
+            ActionMeTooltip.OnShowTooltip += ShowTooltip;
+            ActionMeTooltip.OnHideTooltip += HideTooltip;
         }
 
         protected virtual void OnDisable()
         {
-            ActionTooltip.OnShowTooltip -= ShowTooltip;
-            ActionTooltip.OnHideTooltip -= HideTooltip;
+            ActionMeTooltip.OnShowTooltip -= ShowTooltip;
+            ActionMeTooltip.OnHideTooltip -= HideTooltip;
         }
 
         public virtual void ShowTooltip() => SetParentObjectActive(true);

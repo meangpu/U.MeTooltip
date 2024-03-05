@@ -20,7 +20,7 @@ namespace Meangpu.Tooltip
         [SerializeField] float _maxRayDistance = 999f;
         [EndIf]
 
-        [SerializeField] bool _preventUIOverMouse = true;
+        [SerializeField] bool _UIPreventThisTooltipFromTrigger = false;
 
         Camera cam;
 
@@ -29,20 +29,8 @@ namespace Meangpu.Tooltip
         public void OnPointerEnter(PointerEventData eventData) => ShowTooltip();
         public void OnPointerExit(PointerEventData eventData) => HideTooltip();
 
-
-        bool IsRayDoHitObject()
-        {
-            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
-            return Physics.Raycast(ray, out RaycastHit hit, _maxRayDistance);
-        }
-
         void OnMouseEnter()
         {
-            if (_preventUIOverMouse)
-            {
-                if (EventSystem.current.IsPointerOverGameObject()) return;
-            }
-
             if (!_checkRayDistance)
             {
                 ShowTooltip();
@@ -50,28 +38,29 @@ namespace Meangpu.Tooltip
             }
 
             if (!IsRayDoHitObject()) return;
-
             ShowTooltip();
         }
 
         void OnMouseExit() => HideTooltip();
 
+        bool IsRayDoHitObject()
+        {
+            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            return Physics.Raycast(ray, out RaycastHit hit, _maxRayDistance);
+        }
+
         private void HideTooltip()
         {
-            if (_preventUIOverMouse)
-            {
-                if (EventSystem.current != null)
-                {
-                    if (EventSystem.current.IsPointerOverGameObject()) return;
-                }
-            }
+            if (_UIPreventThisTooltipFromTrigger && EventSystem.current.IsPointerOverGameObject()) return;
 
             CancelInvoke();
-            ActionTooltip.OnHideTooltip?.Invoke();
+            ActionMeTooltip.OnHideTooltip?.Invoke();
         }
 
         private void ShowTooltip()
         {
+            if (_UIPreventThisTooltipFromTrigger && EventSystem.current.IsPointerOverGameObject()) return;
+
             if (_useTimeDelay)
             {
                 Invoke(nameof(SetupContentThenInvokeAction), _timeBeforePopUp);
@@ -85,7 +74,7 @@ namespace Meangpu.Tooltip
         public void SetupContentThenInvokeAction()
         {
             ShowContent();
-            ActionTooltip.OnShowTooltip?.Invoke();
+            ActionMeTooltip.OnShowTooltip?.Invoke();
         }
 
         // child class will implement function to setup data tooltip

@@ -11,12 +11,12 @@ namespace Meangpu.Tooltip.Basic
         protected override void OnEnable()
         {
             base.OnEnable();
-            ActionTooltip.OnDisplayBasicText += DisplayContent;
+            ActionMeTooltip.OnDisplayBasicText += DisplayContent;
         }
         protected override void OnDisable()
         {
             base.OnDisable();
-            ActionTooltip.OnDisplayBasicText -= DisplayContent;
+            ActionMeTooltip.OnDisplayBasicText -= DisplayContent;
         }
 
         public override bool LayoutElementShouldBeEnable()
