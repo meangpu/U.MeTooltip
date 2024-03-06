@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
 
 namespace Meangpu.Tooltip
 {
-    public abstract class BaseTooltip : MonoBehaviour
+    public abstract class BaseTooltipLeftRight : MonoBehaviour
     {
         [Header("Tooltip Object")]
         [SerializeField] protected RectTransform _tooltipRectTrans;
@@ -16,6 +15,7 @@ namespace Meangpu.Tooltip
 
         [Header("Setting")]
         [SerializeField] protected Vector2 _offSet = new(30, 20);
+        protected Vector2 _realOffset = new();
         protected Vector2 _mousePos;
         protected Vector2 _offScreenBound;
         protected Vector2 _nouUIPos;
@@ -55,6 +55,7 @@ namespace Meangpu.Tooltip
             _offScreenBound = new Vector2(_tooltipRectTrans.rect.width, _tooltipRectTrans.rect.height); // use to set bound to box size
         }
 
+
         public void UpdatePosition()
         {
             SetupOffScreenBound();
@@ -64,67 +65,34 @@ namespace Meangpu.Tooltip
 #elif ENABLE_INPUT_SYSTEM
             _mousePos = Mouse.current.position.ReadValue();
 #endif
-            DoSetPosSmart(_mousePos);
+            SetTooltipPivotByMousePos(_mousePos);
         }
 
-        bool IsInBound() => XIsInBound() && YIsInBOund();
-        bool XIsInBound() => MathUtil.IsBetweenFloat(_mousePos.x, _offScreenBound.x, Screen.width - _offScreenBound.x);
-        bool YIsInBOund() => MathUtil.IsBetweenFloat(_mousePos.y, _offScreenBound.y, Screen.height - _offScreenBound.y);
-
-        bool IsLeftBoundBad() => _mousePos.x < _offScreenBound.x;
-        bool IsRightBoundBad() => _mousePos.x > Screen.width - _offScreenBound.x;
-
-        bool IsTopBoundBad() => _mousePos.y > Screen.height - _offScreenBound.y;
-        bool IsBottomBoundBad() => _mousePos.y < _offScreenBound.y;
-
-
-        void DoSetPosSmart(Vector2 mousePos)
+        void SetTooltipPivotByMousePos(Vector2 mousePos)
         {
-            Vector2 realOffset = GetRealOffset();
-
-            if (IsInBound())
+            if (mousePos.x < Screen.width * 0.5f)
             {
-                _tooltipRectTrans.pivot = new Vector2(0, 1); // set pivot to 0 1 - it will be lower right
-                _parentObject.transform.position = mousePos + _offSet;
-                return;
+                SetTooltipPosToRightOfMouse();
+                _realOffset = _offSet;
             }
             else
             {
-                float pivotX = GetXPivot(mousePos);
-                float pivotY = GetYPivot(mousePos);
-
-                _tooltipRectTrans.pivot = new Vector2(pivotX, pivotY);
-                _parentObject.transform.position = mousePos + realOffset;  // at edge of screen so no offset
+                SetTooltipToLeftOfMouse();
+                _realOffset.Set(-_offSet.x, _offSet.y);
             }
+
+            if (IsBottomBoundBad())
+            {
+                _tooltipRectTrans.pivot = new(_tooltipRectTrans.pivot.x, 0);
+            }
+
+            _parentObject.transform.position = mousePos + _realOffset;
         }
 
-        Vector2 GetRealOffset() => new(GetXOffset(), GetYOffset());
+        bool IsBottomBoundBad() => _mousePos.y < _offScreenBound.y;
 
-        float GetXOffset()
-        {
-            if (IsRightBoundBad()) return -_offSet.x;
-            else return _offSet.x;
-        }
-
-        float GetYOffset()
-        {
-            if (IsTopBoundBad()) return -_offSet.y;
-            else return _offSet.y;
-        }
-
-        float GetXPivot(Vector2 mousePos)
-        {
-            // set adaptive UI only when right bad
-            if (!IsRightBoundBad()) return 0;
-            else return mousePos.x / Screen.width;
-        }
-
-        float GetYPivot(Vector2 mousePos)
-        {
-            // set adaptive UI only when bottom bad
-            if (!IsBottomBoundBad()) return 1;
-            else return mousePos.y / Screen.height;
-        }
+        void SetTooltipPosToRightOfMouse() => _tooltipRectTrans.pivot = new(0, 1);
+        void SetTooltipToLeftOfMouse() => _tooltipRectTrans.pivot = new(1, 1);
 
         // this use to make UI smart and make long text wrap around box
         public abstract bool LayoutElementShouldBeEnable();
