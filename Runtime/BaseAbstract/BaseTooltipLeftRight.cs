@@ -91,7 +91,8 @@ namespace Meangpu.Tooltip
             _parentObject.transform.position = mousePos + _realOffset;
         }
 
-        bool IsBottomBoundBad() => _mousePos.y < _offScreenBound.y;
+        bool IsBottomBoundBad() => _mousePos.y < _offScreenBound.y - _offSet.y;
+
 
         void SetTooltipPosToRightOfMouse() => _tooltipRectTrans.pivot = new(0, 1);
         void SetTooltipToLeftOfMouse() => _tooltipRectTrans.pivot = new(1, 1);

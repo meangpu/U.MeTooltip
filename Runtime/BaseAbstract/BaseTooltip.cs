@@ -70,14 +70,14 @@ namespace Meangpu.Tooltip
         }
 
         bool IsInBound() => XIsInBound() && YIsInBOund();
-        bool XIsInBound() => MathUtil.IsBetweenFloat(_mousePos.x, _offScreenBound.x, Screen.width - _offScreenBound.x);
-        bool YIsInBOund() => MathUtil.IsBetweenFloat(_mousePos.y, _offScreenBound.y, Screen.height - _offScreenBound.y);
+        bool XIsInBound() => MathUtil.IsBetweenFloat(_mousePos.x, _offScreenBound.x + _offSet.x, Screen.width - _offScreenBound.x - _offSet.x);
+        bool YIsInBOund() => MathUtil.IsBetweenFloat(_mousePos.y, _offScreenBound.y + _offSet.y, Screen.height - _offScreenBound.y - _offSet.y);
 
-        bool IsLeftBoundBad() => _mousePos.x < _offScreenBound.x;
-        bool IsRightBoundBad() => _mousePos.x > Screen.width - _offScreenBound.x;
+        bool IsLeftBoundBad() => _mousePos.x < _offScreenBound.x + _offSet.x;
+        bool IsRightBoundBad() => _mousePos.x > Screen.width - _offScreenBound.x - _offSet.x;
 
-        bool IsTopBoundBad() => _mousePos.y > Screen.height - _offScreenBound.y;
-        bool IsBottomBoundBad() => _mousePos.y < _offScreenBound.y;
+        bool IsTopBoundBad() => _mousePos.y > Screen.height - _offScreenBound.y + _offSet.y;
+        bool IsBottomBoundBad() => _mousePos.y < _offScreenBound.y - _offSet.y;
 
 
         void DoSetPosSmart(Vector2 mousePos)
