@@ -9,6 +9,8 @@ namespace Meangpu.Tooltip
 {
     public abstract class BaseTooltip : MonoBehaviour
     {
+        [Header("fix 4k canvas")]
+        [SerializeField] protected Transform _canvasParent;
         [Header("Tooltip Object")]
         [SerializeField] protected RectTransform _tooltipRectTrans;
         [SerializeField] protected LayoutElement _tooltipLayoutElementObj;
@@ -17,7 +19,7 @@ namespace Meangpu.Tooltip
         [Header("Setting")]
         [SerializeField] protected Vector2 _offSet = new(30, 20);
         protected Vector2 _mousePos;
-        protected Vector2 _offScreenBound;
+        protected Vector2 _offScreenBound = new();
         protected Vector2 _nouUIPos;
 
 
@@ -50,14 +52,14 @@ namespace Meangpu.Tooltip
 
         private void Update() => UpdatePosition();
 
-        void SetupOffScreenBound()
+        void UpdateScreenBound()
         {
-            _offScreenBound = new Vector2(_tooltipRectTrans.rect.width, _tooltipRectTrans.rect.height); // use to set bound to box size
+            _offScreenBound.Set(_tooltipRectTrans.rect.width * _canvasParent.localScale.x, _tooltipRectTrans.rect.height * _canvasParent.localScale.y);// use to set bound to box size
         }
 
         public void UpdatePosition()
         {
-            SetupOffScreenBound();
+            UpdateScreenBound();
 
 #if ENABLE_LEGACY_INPUT_MANAGER
             _mousePos = Input.mousePosition;
