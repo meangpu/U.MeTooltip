@@ -49,7 +49,7 @@ namespace Meangpu.Tooltip
             return Physics.Raycast(ray, out RaycastHit hit, _maxRayDistance);
         }
 
-        private void HideTooltip()
+        public virtual void HideTooltip()
         {
             if (_UIPreventThisTooltipFromTrigger && EventSystem.current.IsPointerOverGameObject()) return;
 
@@ -57,7 +57,7 @@ namespace Meangpu.Tooltip
             ActionMeTooltip.OnHideTooltip?.Invoke();
         }
 
-        private void ShowTooltip()
+        public virtual void ShowTooltip()
         {
             if (_UIPreventThisTooltipFromTrigger && EventSystem.current.IsPointerOverGameObject()) return;
 
