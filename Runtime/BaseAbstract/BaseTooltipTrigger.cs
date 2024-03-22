@@ -54,7 +54,7 @@ namespace Meangpu.Tooltip
             if (_UIPreventThisTooltipFromTrigger && EventSystem.current.IsPointerOverGameObject()) return;
 
             CancelInvoke();
-            ActionMeTooltip.OnHideTooltip?.Invoke();
+            InvokeHideTooltip();
         }
 
         public virtual void ShowTooltip()
@@ -71,10 +71,13 @@ namespace Meangpu.Tooltip
             }
         }
 
+        public virtual void InvokeShowTooltip() => ActionMeTooltip.OnShowTooltip?.Invoke();
+        public virtual void InvokeHideTooltip() => ActionMeTooltip.OnHideTooltip?.Invoke();
+
         public void SetupContentThenInvokeAction()
         {
             ShowContent();
-            ActionMeTooltip.OnShowTooltip?.Invoke();
+            InvokeShowTooltip();
         }
 
         // child class will implement function to setup data tooltip
