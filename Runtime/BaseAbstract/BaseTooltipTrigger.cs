@@ -22,12 +22,24 @@ namespace Meangpu.Tooltip
 
         [SerializeField] bool _UIPreventThisTooltipFromTrigger = false;
 
+        bool _isMouseOverThisObject;
+        public bool IsMouseOverThisObject => _isMouseOverThisObject;
+
         Camera cam;
 
         void Awake() => cam = Camera.main;
 
-        public void OnPointerEnter(PointerEventData eventData) => ShowTooltip();
-        public void OnPointerExit(PointerEventData eventData) => HideTooltip();
+        public virtual void OnPointerEnter(PointerEventData eventData)
+        {
+            ShowTooltip();
+            _isMouseOverThisObject = true;
+        }
+
+        public virtual void OnPointerExit(PointerEventData eventData)
+        {
+            HideTooltip();
+            _isMouseOverThisObject = false;
+        }
 
         void OnMouseEnter()
         {
