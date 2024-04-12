@@ -22,7 +22,7 @@ namespace Meangpu.Tooltip
 
         [SerializeField] bool _UIPreventThisTooltipFromTrigger = false;
 
-        bool _isMouseOverThisObject;
+        protected bool _isMouseOverThisObject;
         public bool IsMouseOverThisObject => _isMouseOverThisObject;
 
         Camera cam;
