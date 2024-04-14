@@ -130,6 +130,8 @@ namespace Meangpu.Tooltip
 
         // this use to make UI smart and make long text wrap around box
         public abstract bool LayoutElementShouldBeEnable();
+
+        // call this after update content
         public void UpdateBoxLayoutElement() => _tooltipLayoutElementObj.enabled = LayoutElementShouldBeEnable();
     }
 }
